@@ -14,6 +14,13 @@ for p in EXTRA_PATHS:
     if os.path.exists(p) and p not in os.environ.get("PATH", ""):
         os.environ["PATH"] = p + os.pathsep + os.environ.get("PATH", "")
 
+# Render / Linux serverlar uchun static-ffmpeg ni yuklash
+try:
+    import static_ffmpeg
+    static_ffmpeg.add_paths()
+except Exception:
+    pass
+
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 # Majburiy obuna kanallari
