@@ -472,6 +472,24 @@ async def main():
     if CHANNELS:
         logger.info(f"Majburiy obuna kanallari: {CHANNELS}")
 
+    # Render Web Service uchun port ochish (Render sog'lom deb hisoblashi uchun)
+    port = int(os.getenv("PORT", 0))
+    if port > 0:
+        try:
+            from aiohttp import web
+            async def health_handler(request):
+                return web.Response(text="Bot is running smoothly!")
+            app = web.Application()
+            app.router.add_get("/", health_handler)
+            app.router.add_get("/health", health_handler)
+            runner = web.AppRunner(app)
+            await runner.setup()
+            site = web.TCPSite(runner, "0.0.0.0", port)
+            await site.start()
+            logger.info(f"Render Web Service porti tinglanmoqda: 0.0.0.0:{port}")
+        except Exception as e:
+            logger.warning(f"Web serverni ishga tushirishda ogohlantirish: {e}")
+
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
 
