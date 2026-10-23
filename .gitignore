@@ -1,0 +1,17 @@
+# Muhit va sozlamalar
+.env
+__pycache__/
+*.pyc
+
+# Vaqtinchalik yuklamalar
+downloads/
+*.mp4
+*.mkv
+*.webm
+*.jpg
+*.png
+
+# Virtual muhit
+venv/
+.venv/
+env/
